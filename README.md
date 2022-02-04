@@ -1,6 +1,6 @@
 # Denoising Diffusion Restoration Models (DDRM)
 
-[arXiv](https://arxiv.org/abs/2201.11793) | [PDF](https://arxiv.org/pdf/2201.11793) | [Project Website](https://ddrm-ml.github.io/)
+[arXiv](https://arxiv.org/abs/2201.11793) | [PDF](https://ddrm-ml.github.io/DDRM-paper.pdf) | [Project Website](https://ddrm-ml.github.io/)
 
 [Bahjat Kawar](https://il.linkedin.com/in/bahjat-k)<sup>1</sup>, [Michael Elad](https://elad.cs.technion.ac.il/)<sup>1</sup>, [Stefano Ermon](http://cs.stanford.edu/~ermon)<sup>2</sup>, [Jiaming Song](http://tsong.me)<sup>2</sup><br />
 <sup>1</sup> Technion, <sup>2</sup>Stanford University
