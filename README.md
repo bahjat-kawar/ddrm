@@ -62,13 +62,10 @@ python main.py --ni --config imagenet_256.yml --doc imagenet --timesteps 20 --et
 ## References and Acknowledgements
 ```
 @article{kawar2022denoising,
-  title={Denoising Diffusion Restoration Models},
-  author={Kawar, Bahjat and Elad, Michael and Ermon, Stefano and Song, Jiaming},
-  journal={arXiv},
-  year={2022},
-  month={January},
-  abbr={Preprint},
-  url={https://arxiv.org/abs/?}
+      title={Denoising Diffusion Restoration Models}, 
+      author={Bahjat Kawar and Michael Elad and Stefano Ermon and Jiaming Song},
+      year={2022},
+      journal={arXiv preprint arXiv:2201.11793},
 }
 ```
 
