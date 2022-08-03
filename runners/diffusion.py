@@ -222,6 +222,24 @@ class Diffusion(object):
         elif deg == 'deno':
             from functions.svd_replacement import Denoising
             H_funcs = Denoising(config.data.channels, self.config.data.image_size, self.device)
+        elif deg[:10] == 'sr_bicubic':
+            factor = int(deg[10:])
+            from functions.svd_replacement import SRConv
+            def bicubic_kernel(x, a=-0.5):
+                if abs(x) <= 1:
+                    return (a + 2)*abs(x)**3 - (a + 3)*abs(x)**2 + 1
+                elif 1 < abs(x) and abs(x) < 2:
+                    return a*abs(x)**3 - 5*a*abs(x)**2 + 8*a*abs(x) - 4*a
+                else:
+                    return 0
+            k = np.zeros((factor * 4))
+            for i in range(factor * 4):
+                x = (1/factor)*(i- np.floor(factor*4/2) +0.5)
+                k[i] = bicubic_kernel(x)
+            k = k / np.sum(k)
+            kernel = torch.from_numpy(k).float().to(self.device)
+            H_funcs = SRConv(kernel / kernel.sum(), \
+                             config.data.channels, self.config.data.image_size, self.device, stride = factor)
         elif deg == 'deblur_uni':
             from functions.svd_replacement import Deblurring
             H_funcs = Deblurring(torch.Tensor([1/9] * 9).to(self.device), config.data.channels, self.config.data.image_size, self.device)
@@ -231,6 +249,15 @@ class Diffusion(object):
             pdf = lambda x: torch.exp(torch.Tensor([-0.5 * (x/sigma)**2]))
             kernel = torch.Tensor([pdf(-2), pdf(-1), pdf(0), pdf(1), pdf(2)]).to(self.device)
             H_funcs = Deblurring(kernel / kernel.sum(), config.data.channels, self.config.data.image_size, self.device)
+        elif deg == 'deblur_aniso':
+            from functions.svd_replacement import Deblurring2D
+            sigma = 20
+            pdf = lambda x: torch.exp(torch.Tensor([-0.5 * (x/sigma)**2]))
+            kernel2 = torch.Tensor([pdf(-4), pdf(-3), pdf(-2), pdf(-1), pdf(0), pdf(1), pdf(2), pdf(3), pdf(4)]).to(self.device)
+            sigma = 1
+            pdf = lambda x: torch.exp(torch.Tensor([-0.5 * (x/sigma)**2]))
+            kernel1 = torch.Tensor([pdf(-4), pdf(-3), pdf(-2), pdf(-1), pdf(0), pdf(1), pdf(2), pdf(3), pdf(4)]).to(self.device)
+            H_funcs = Deblurring2D(kernel1 / kernel1.sum(), kernel2 / kernel2.sum(), config.data.channels, self.config.data.image_size, self.device)
         elif deg[:2] == 'sr':
             blur_by = int(deg[2:])
             from functions.svd_replacement import SuperResolution
@@ -257,7 +284,7 @@ class Diffusion(object):
             y_0 = y_0 + sigma_0 * torch.randn_like(y_0)
 
             pinv_y_0 = H_funcs.H_pinv(y_0).view(y_0.shape[0], config.data.channels, self.config.data.image_size, self.config.data.image_size)
-            if deg == 'deblur_uni' or deg == 'deblur_gauss': pinv_y_0 = y_0.view(y_0.shape[0], config.data.channels, self.config.data.image_size, self.config.data.image_size)
+            if deg[:6] == 'deblur': pinv_y_0 = y_0.view(y_0.shape[0], config.data.channels, self.config.data.image_size, self.config.data.image_size)
             elif deg == 'color': pinv_y_0 = y_0.view(y_0.shape[0], 1, self.config.data.image_size, self.config.data.image_size).repeat(1, 3, 1, 1)
             elif deg[:3] == 'inp': pinv_y_0 += H_funcs.H_pinv(H_funcs.H(torch.ones_like(pinv_y_0))).reshape(*pinv_y_0.shape) - 1
 

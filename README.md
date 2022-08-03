@@ -55,7 +55,7 @@ where the following are options
 - `ETA` is the eta hyperparameter in the paper. (default: `0.85`)
 - `ETA_B` is the eta_b hyperparameter in the paper. (default: `1`)
 - `STEPS` controls how many timesteps used in the process.
-- `DEGREDATION` is the type of degredation allowed. (One of: `cs2`, `cs4`, `inp`, `inp_lolcat`, `inp_lorem`, `deno`, `deblur_uni`, `deblur_gauss`, `sr2`, `sr4`, `sr8`, `sr16`, `color`)
+- `DEGREDATION` is the type of degredation allowed. (One of: `cs2`, `cs4`, `inp`, `inp_lolcat`, `inp_lorem`, `deno`, `deblur_uni`, `deblur_gauss`, `deblur_aniso`, `sr2`, `sr4`, `sr8`, `sr16`, `sr_bicubic4`, `sr_bicubic8`, `sr_bicubic16` `color`)
 - `SIGMA_0` is the noise observed in y.
 - `CONFIG` is the name of the config file (see `configs/` for a list), including hyperparameters such as batch size and network architectures.
 - `DATASET` is the name of the dataset used, to determine where the checkpoint file is found.

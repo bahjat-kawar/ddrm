@@ -8,8 +8,8 @@ data:
     random_flip: true
     rescaled: true
     num_workers: 32
-    subset_1k: False
-    out_of_dist: True
+    subset_1k: True
+    out_of_dist: False
 
 model:
     type: "openai"

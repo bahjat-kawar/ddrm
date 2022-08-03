@@ -138,4 +138,3 @@ dependencies:
   - zstd=1.4.9=haebb681_0
   - pip:
     - torch-fidelity==0.3.0
-prefix: /atlas/u/tsong/anaconda3/envs/ddrm
