@@ -89,11 +89,12 @@ python main.py --ni --config bedroom.yml --doc bedroom --timesteps 20 --eta 0.85
 
 ## References and Acknowledgements
 ```
-@article{kawar2022denoising,
-      title={Denoising Diffusion Restoration Models}, 
-      author={Bahjat Kawar and Michael Elad and Stefano Ermon and Jiaming Song},
-      year={2022},
-      journal={arXiv preprint arXiv:2201.11793},
+@inproceedings{
+kawar2022denoising,
+title={Denoising Diffusion Restoration Models},
+author={Bahjat Kawar and Michael Elad and Stefano Ermon and Jiaming Song},
+booktitle={Advances in Neural Information Processing Systems},
+year={2022}
 }
 ```
 
